@@ -1,5 +1,19 @@
 const User = require("../models/user");
 
+exports.userCheck = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await User.findOne({ email }).exec();
+    if (user)
+      res.json(false);
+    else
+      res.json(true);
+  }
+  catch (err) {
+    console.log(err)
+  }
+};
+
 exports.createOrUpdateUser = async (req, res) => {
   const { name, picture, email } = req.user;
 

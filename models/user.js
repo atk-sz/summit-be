@@ -3,22 +3,32 @@ const { ObjectId } = mongoose.Schema;
 
 const userSchema = new mongoose.Schema(
   {
-    name: String,
+    name: {
+      type: String,
+    },
     email: {
       type: String,
       required: true,
       index: true,
     },
+    fname: {
+      type: String,
+    },
+    lname: {
+      type: String,
+    },
     role: {
       type: String,
       default: "subscriber",
     },
-    cart: {
-      type: Array,
-      default: [],
+    city: {
+      type: String,
     },
     address: String,
-    wishlist: [{ type: ObjectId, ref: "Product" }],
+    phone: {
+      type: Number,
+      trim: true
+    }
   },
   { timestamps: true }
 );
