@@ -21,14 +21,35 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "subscriber",
     },
+    type:{
+      type: ObjectId,
+      ref:'Type'
+    },
     city: {
       type: String,
     },
-    address: String,
     phone: {
       type: Number,
       trim: true
-    }
+    },
+    emailVerified:{
+      type:Boolean,
+      required:true,
+      default:false
+    },
+    request:{
+      type:Boolean,
+      required:true,
+      default:false
+    },
+    response:{
+      type:Boolean,
+      required:true,
+      default:false
+    },
+    token:{
+      type:String
+    },
   },
   { timestamps: true }
 );

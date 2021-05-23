@@ -1,16 +1,58 @@
 const User = require("../models/user");
+const crypto = require('crypto');
+const createTransport = require('../config/nodemailer');
+const { emailVerify } = require("../middlewares/nodemailer");
 
-exports.userCheck = async (req, res) => {
-  const { email } = req.body;
+exports.register = async (req, res, next) => {
+  const { values } = req.body;
+  const { email } = values
   try {
     const user = await User.findOne({ email }).exec();
     if (user)
-      res.json(false);
-    else
-      res.json(true);
+      res.status(404).json("User exixts");
+    else {
+      values.name = email.split("@")[0]
+      const buf = crypto.randomBytes(20);
+      const token = buf.toString('hex')
+      values.token = token;
+      const newUser = await new User(values).save()
+      if (newUser) {
+        console.log(newUser)
+        next()
+      } else {
+        res.status(404).json("User exixts");
+      }
+    }
   }
   catch (err) {
     console.log(err)
+    res.status(401).json({ error: "Some error in registration" });
+  }
+};
+
+exports.verifyEmail = async (req, res) => {
+  const { token } = req.params;
+  try {
+    // User.deleteMany({}).then(function () {
+    //   console.log("Data deleted"); // Success
+    // }).catch(function (error) {
+    //   console.log(error); // Failure
+    // });
+    // const allUser = await User.find({}).exec();
+    // console.log("allUser")
+    // console.log(allUser)
+    const user = await User.findOneAndUpdate({ token }, { emailVerified: true }, { new: true }).exec();
+    if (user) {
+      console.log(user)
+      res.json(user)
+    }
+    else {
+    res.json(false)
+    }
+  }
+  catch (err) {
+    console.log(err)
+    res.status(401).json({ error: "Some error in verification" });
   }
 };
 
