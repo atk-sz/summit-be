@@ -6,6 +6,32 @@ const Order = require("../models/order");
 
 const uniqueid = require("uniqueid");
 
+
+exports.getUser = async (req, res) => {
+  const fuser = await User.findById(req.params.id).exec();
+  console.log(fuser)
+  if (fuser)
+    res.json(fuser);
+  else
+    res.status(404).send('user not found')
+};
+
+
+exports.updateToAgentReuest = async (req, res) => {
+  const user1 = await User.findOne({ email: req.user.email }).exec();
+  const user = await User.findOneAndUpdate({ email: req.user.email }, { type: req.body.type, request: true }, { new: true }).exec();
+
+  console.log("user1")
+  console.log(user1)
+  console.log("user")
+  console.log(user)
+
+  // const cart = await Cart.findOneAndRemove({ orderedBy: user._id }).exec();
+
+  res.json(true);
+};
+
+
 exports.userCart = async (req, res) => {
   const { cart } = req.body;
 

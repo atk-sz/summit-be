@@ -4,12 +4,17 @@ const Type = require('./models/type')
 const cities = ['Mumbai', 'Bengaluru', 'Kolkata', 'Chennai', 'Hyderabad', 'jaipur', 'Pune']
 
 const seed = async () => {
-    const newTypes = await Type.find()
-    // console.log(newTypes[2]._id)
-    const newUsers = await User.find()
-    newUsers.map(each=>{
-        console.log(each.type)
-    })
+    // const newTypes = await Type.find()
+    // // console.log(newTypes[2]._id)
+    // const newUsers = await User.find()
+    // newUsers.map(each=>{
+    //     console.log(each.type)
+    // })
+    // const fUser = await User.findOneAndDelete({ email: `syed.zaid98@gmail.com` });
+    // const fUser = await User.findOneAndUpdate({ email: `syed.zaid98@gmail.com` },{role:'agent', response:true},{new:true} );
+    // console.log("fUser")
+    // console.log(fUser)
+
     // console.log(newUsers.length)
     // const deletedUsers = await User.deleteMany({ response: true })
     // console.log("deletedUsers")

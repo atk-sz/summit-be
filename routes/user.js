@@ -17,8 +17,11 @@ const {
   wishlist,
   removeFromWishlist,
   createCashOrder,
+  updateToAgentReuest,
+  getUser
 } = require("../controllers/user");
 
+router.get("/user/:id", getUser);
 router.post("/user/cart", authCheck, userCart);
 router.get("/user/cart", authCheck, getUserCart);
 router.delete("/user/cart", authCheck, emptyCart);
@@ -38,5 +41,8 @@ router.get("/user/orders", authCheck, getUserOrders);
 router.post("/user/wishlist", authCheck, addToWishlist);
 router.get("/user/wishlist", authCheck, wishlist);
 router.put("/user/wishlist/:productId", authCheck, removeFromWishlist);
+
+
+router.post("/user/update-request/agent", authCheck, updateToAgentReuest);
 
 module.exports = router;

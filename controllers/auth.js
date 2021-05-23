@@ -76,7 +76,6 @@ exports.createOrUpdateUser = async (req, res) => {
       name: email.split("@")[0],
       picture,
       emailVerified: true,
-      request: true,
       email,
     }).save();
     console.log("CREATE USER CONTROLLER", newUser);
