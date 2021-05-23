@@ -6,8 +6,8 @@ const cities = ['Mumbai', 'Bengaluru', 'Kolkata', 'Chennai', 'Hyderabad', 'jaipu
 const seed = async () => {
     // const newTypes = await Type.find()
     // // console.log(newTypes[2]._id)
-    const newUsers = await User.findOne({email:'z18@gmail.com'})
-    console.log(newUsers)
+    // const newUsers = await User.findOne({email:'z18@gmail.com'})
+    // console.log(newUsers)
     // newUsers.map(each=>{
     //     console.log(each.type)
     // })

@@ -21,7 +21,8 @@ const {
   getUser,
   getPendingUsers,
   approveUser,
-  rejectUser
+  rejectUser,
+  getCities
 } = require("../controllers/user");
 const { approveMessage, rejectMessage } = require("../middlewares/nodemailer");
 
@@ -30,6 +31,8 @@ router.get("/user/:id", getUser);
 router.get("/users/pending", authCheck, adminCheck, getPendingUsers);
 router.post("/user/approve/agent", authCheck, adminCheck, approveMessage, approveUser);
 router.post("/user/reject/agent", authCheck, adminCheck, rejectMessage, rejectUser);
+router.post("/user/update-request/agent", authCheck, updateToAgentReuest);
+router.get("/user/search/cities", getCities);
 
 router.post("/user/cart", authCheck, userCart);
 router.get("/user/cart", authCheck, getUserCart);
@@ -52,6 +55,5 @@ router.get("/user/wishlist", authCheck, wishlist);
 router.put("/user/wishlist/:productId", authCheck, removeFromWishlist);
 
 
-router.post("/user/update-request/agent", authCheck, updateToAgentReuest);
 
 module.exports = router;

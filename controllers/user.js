@@ -67,6 +67,17 @@ exports.rejectUser = async (req, res) => {
   }
 };
 
+exports.getCities = async (req, res) => {
+  try {
+    const users = await User.find({ request: true, response: true }).exec();
+    console.log(users)
+    res.json(users);
+  } catch (error) {
+    res.status(404).send('could not delete user')
+    console.log(error)
+  }
+};
+
 exports.userCart = async (req, res) => {
   const { cart } = req.body;
 
