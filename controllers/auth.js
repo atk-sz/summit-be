@@ -47,7 +47,7 @@ exports.verifyEmail = async (req, res) => {
       res.json(user)
     }
     else {
-    res.json(false)
+      res.json(false)
     }
   }
   catch (err) {
@@ -58,6 +58,9 @@ exports.verifyEmail = async (req, res) => {
 
 exports.createOrUpdateUser = async (req, res) => {
   const { name, picture, email } = req.user;
+
+  console.log("req.user")
+  console.log(req.user)
 
   const user = await User.findOneAndUpdate(
     { email },
@@ -72,6 +75,8 @@ exports.createOrUpdateUser = async (req, res) => {
     const newUser = await new User({
       name: email.split("@")[0],
       picture,
+      emailVerified: true,
+      request: true,
       email,
     }).save();
     console.log("CREATE USER CONTROLLER", newUser);

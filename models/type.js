@@ -4,6 +4,7 @@ const categorySchema = new mongoose.Schema(
   {
     name: {
       type: String,
+      unique:true,
       trim: true,
       required: "Name is required",
       minlength: [2, "Too short"],
@@ -13,4 +14,4 @@ const categorySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Category", categorySchema);
+module.exports = mongoose.model("Type", categorySchema);

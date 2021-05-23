@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 const fs = require("fs");
 const cors = require("cors");
+const seed = require("./seed");
 require("dotenv").config();
 
 // app
@@ -21,7 +22,10 @@ mongoose
     useFindAndModify: false,
     useUnifiedTopology: true,
   })
-  .then(() => console.log("Connected to MongoDB"))
+  .then(() => {
+    seed()
+    console.log("Connected to MongoDB")
+})
   .catch((err) => console.log(`DB connection error - ${err}`));
 
 // middlewares
