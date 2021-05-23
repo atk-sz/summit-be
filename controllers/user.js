@@ -16,21 +16,56 @@ exports.getUser = async (req, res) => {
     res.status(404).send('user not found')
 };
 
-
 exports.updateToAgentReuest = async (req, res) => {
-  const user1 = await User.findOne({ email: req.user.email }).exec();
-  const user = await User.findOneAndUpdate({ email: req.user.email }, { type: req.body.type, request: true }, { new: true }).exec();
-
-  console.log("user1")
-  console.log(user1)
-  console.log("user")
-  console.log(user)
-
-  // const cart = await Cart.findOneAndRemove({ orderedBy: user._id }).exec();
-
-  res.json(true);
+  try {
+    const { values } = req.body;
+    const user = await User.findOneAndUpdate({ email: req.user.email }, values, { new: true }).exec();
+    if (user)
+      res.json(true);
+    else
+      res.status(404).send('could not update user')
+  } catch (error) {
+    res.status(404).send('could not update user')
+    console.log(error)
+  }
 };
 
+exports.getPendingUsers = async (req, res) => {
+  try {
+    const foundUsers = await User.find({ request: true, response: false }).populate('type').exec()
+    res.json(foundUsers)
+  } catch (error) {
+    res.status(404).send('users not found')
+  }
+};
+
+exports.approveUser = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOneAndUpdate({ email }, { response: true }, { new: true }).exec();
+    if (user)
+      res.json(true);
+    else
+      res.status(404).send('could not update user')
+  } catch (error) {
+    res.status(404).send('could not update user')
+    console.log(error)
+  }
+};
+
+exports.rejectUser = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOneAndDelete({ email }).exec();
+    if (user)
+      res.json(true);
+    else
+      res.status(404).send('could not delete user')
+  } catch (error) {
+    res.status(404).send('could not delete user')
+    console.log(error)
+  }
+};
 
 exports.userCart = async (req, res) => {
   const { cart } = req.body;

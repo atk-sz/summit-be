@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 // route middlewares
-const { authCheck } = require("../middlewares/auth");
+const { authCheck, adminCheck } = require("../middlewares/auth");
 
 // controllers
 const {
@@ -18,10 +18,19 @@ const {
   removeFromWishlist,
   createCashOrder,
   updateToAgentReuest,
-  getUser
+  getUser,
+  getPendingUsers,
+  approveUser,
+  rejectUser
 } = require("../controllers/user");
+const { approveMessage, rejectMessage } = require("../middlewares/nodemailer");
+
 
 router.get("/user/:id", getUser);
+router.get("/users/pending", authCheck, adminCheck, getPendingUsers);
+router.post("/user/approve/agent", authCheck, adminCheck, approveMessage, approveUser);
+router.post("/user/reject/agent", authCheck, adminCheck, rejectMessage, rejectUser);
+
 router.post("/user/cart", authCheck, userCart);
 router.get("/user/cart", authCheck, getUserCart);
 router.delete("/user/cart", authCheck, emptyCart);
