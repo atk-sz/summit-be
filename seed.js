@@ -4,8 +4,11 @@ const Type = require('./models/type')
 const cities = ['Mumbai', 'Bengaluru', 'Kolkata', 'Chennai', 'Hyderabad', 'jaipur', 'Pune']
 
 const seed = async () => {
-    const newTypes = await Type.find()
+    // const newTypes = await Type.find()
     // console.log(newTypes)
+    
+    // const newUser = await new User({ name: `both chekc`, email: `zcheck12@gmail.com`, emailVerified: true, role:'agent', response: true, request: true, city: 'Bangalore', type: '60ab1fe67725f63a6c9d9348' }).save()
+    // console.log(newUser)
     // const newUsers = await User.findOne({email:'dpac9525@gmail.com'})
     // console.log(newUsers)
     // newUsers.map(each=>{
