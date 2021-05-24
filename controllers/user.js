@@ -42,7 +42,7 @@ exports.getPendingUsers = async (req, res) => {
 exports.approveUser = async (req, res) => {
   try {
     const { email } = req.body;
-    const user = await User.findOneAndUpdate({ email }, { response: true }, { new: true }).exec();
+    const user = await User.findOneAndUpdate({ email }, { response: true, role:'agent' }, { new: true }).exec();
     if (user)
       res.json(true);
     else
@@ -56,7 +56,7 @@ exports.approveUser = async (req, res) => {
 exports.rejectUser = async (req, res) => {
   try {
     const { email } = req.body;
-    const user = await User.findOneAndDelete({ email }).exec();
+    const user = await User.findOneAndUpdate({ email }, {request:false, response:true}).exec();
     if (user)
       res.json(true);
     else
@@ -70,7 +70,6 @@ exports.rejectUser = async (req, res) => {
 exports.getCities = async (req, res) => {
   try {
     const users = await User.find({ request: true, response: true }).exec();
-    console.log(users)
     res.json(users);
   } catch (error) {
     res.status(404).send('could not delete user')

@@ -1,17 +1,15 @@
 const Type = require("../models/type");
-const Product = require("../models/product");
+const User = require("../models/user");
 
 exports.create = async (req, res) => {
   const { name } = req.body;
-
   try {
-    const type = await new Type({ name}).save();
+    const type = await new Type({ name }).save();
     res.json(type);
   } catch (error) {
     console.log(error);
     res.status(400).send("Create type failed");
   }
-  //
 };
 
 exports.list = async (req, res) => {
@@ -64,5 +62,44 @@ exports.remove = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(400).send("Create delete failed");
+  }
+};
+
+exports.getSearchRes = async (req, res) => {
+  const { t_id, city } = req.params;
+  const allUsers = await User.find({ role: 'agent' });
+  const resObj = {
+    fusers: [],
+    ousers: [],
+    msg: ''
+  }
+  console.log("==========================================================================")
+  console.log("==========================================================================")
+  console.log("==========================================================================")
+  let msg;
+  try {
+    if (t_id != 'none' && city != 'none') {
+      resObj.fusers = allUsers.filter(each => ((each.city == city && each.type == t_id)))
+      resObj.ousers = allUsers.filter(each => ((!each.city == city && !each.type == t_id)))
+    } else if (t_id != 'none' && city == 'none') {
+      resObj.fusers = allUsers.filter(each => ((each.type == t_id)))
+      resObj.ousers = allUsers.filter(each => ((!each.type == t_id)))
+    } else if (t_id == 'none' && city != 'none') {
+      resObj.fusers = allUsers.filter(each => ((each.city == city)))
+      resObj.ousers = allUsers.filter(each => {
+        console.log(each.city, " ==== ", city, "========", !each.city == city)
+        return (!each.city == city)
+      })
+    } else {
+      resObj.fusers = allUsers
+      resObj.ousers = []
+    }
+    console.log(resObj)
+    console.log(resObj.fusers.length)
+    console.log(resObj.ousers.length)
+    res.json(true);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Create type failed");
   }
 };

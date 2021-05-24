@@ -15,8 +15,9 @@ const port = process.env.PORT || 8000;
 // db
 // process.env.ATLAS_URI
 // 'mongodb+srv://admin:admin@cluster0.keu4y.mongodb.net/SummitRef1?retryWrites=true&w=majority'
+// ||'mongodb://localhost:27017/Summit'
 mongoose
-  .connect(process.env.ATLAS_URI||'mongodb://localhost:27017/Summit', {
+  .connect(process.env.ATLAS_URI, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
